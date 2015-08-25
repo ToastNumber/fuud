@@ -7,7 +7,7 @@ function initialise() {
     document.getElementById("btnAdd").setAttribute("onclick", "addItemSection()");
     document.getElementById("btnStart").setAttribute("onclick", "startAllTimers()");
     document.getElementById("btnReset").setAttribute("onclick", "reset()");
-    document.getElementById("Pause").setAttribute("onclick", "pauseAllTimers()");
+    document.getElementById("btnPause").setAttribute("onclick", "pauseAllTimers()");
 }
 
 function addItemSection() {
@@ -24,30 +24,43 @@ function createItemSection() {
     nameInput.setAttribute("type", "text");
     nameInput.setAttribute("class", "name");
     nameInput.setAttribute("placeholder", "Food Item");
+    nameDiv.style.display = "inline-block";
     nameDiv.appendChild(nameInput);
 
+    //Time display
     var timeRemainingDiv = document.createElement("div");
     var timeRemainingDisplay = document.createElement("div");
     timeRemainingDisplay.setAttribute("class", "timeRemaining");
     timeRemainingDisplay.innerHTML = "--:--";
+    timeRemainingDisplay.style.display = "inline-block";
+
     var timeRemainingInput = document.createElement("input");
     timeRemainingInput.setAttribute("type", "text");
     timeRemainingInput.setAttribute("class", "timeEditor");
     timeRemainingInput.setAttribute("placeholder", "Time (hh:mm:ss)");
+    timeRemainingInput.style.display = "inline-block";
     //This should only be visible when timers are running
     var btnUpdate = document.createElement("button");
     btnUpdate.setAttribute("class", "btnUpdate");
     btnUpdate.innerHTML = "Update";
+    btnUpdate.style.display = "inline-block";
+
     timeRemainingDiv.appendChild(timeRemainingDisplay);
     timeRemainingDiv.appendChild(timeRemainingInput);
     timeRemainingDiv.appendChild(btnUpdate);
+    timeRemainingDiv.style.display = "inline-block";
+    //End time display
 
     var btnRemove = document.createElement("button");
     btnRemove.setAttribute("class", "remove");
     btnRemove.innerHTML = "Remove";
+    btnRemove.style.display = "inline-block";
+    btnRemove.style.display = "inline-block";
 
     var progressBar = document.createElement("div");
     progressBar.setAttribute("class", "progressBar");
+    progressBar.style.display = "block";
+    progressBar.style.height = "30px";
 
     itemSection.appendChild(nameDiv);
     itemSection.appendChild(timeRemainingDiv);
@@ -57,12 +70,13 @@ function createItemSection() {
     return itemSection;
 }
 
-//The display is the timeRemainingDisplay
-function updateProgressBar(display) {
-
+var colors = [Blue, Red, Green, Yellow];
+var cIndex = 0;
+function getNextColor() {
+    var result = colors[cIndex];
+    cIndex = (cIndex + 1) % cIndex.length;
+    return result;
 }
-
-
 
 
 

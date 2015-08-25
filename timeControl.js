@@ -3,6 +3,11 @@
  */
 
 var initial; //used so that progress bars are at 50% width at appropriate time etc.
+
+function getInitialTime() {
+    return initial;
+}
+
 function startTimer(duration, display) {
     var timer = new CountDownTimer(duration),
         timeObj = CountDownTimer.parse(duration);
@@ -16,10 +21,12 @@ function startTimer(duration, display) {
         seconds = seconds < 10 ? "0" + seconds : seconds;
         display.textContent = minutes + ':' + seconds;
 
-        updateProgressBar(display);
-
-        if (display === document.getElementById("timer") && minutes == 0 && seconds == 0) {
-            timersRunning = false;
+        if (display === document.getElementById("timer")) {
+            if (minutes == 0 && seconds == 0) {
+                timersRunning = false;
+            }
+        } else {
+            updateProgressBar(display);
         }
     }
 
@@ -47,13 +54,13 @@ function startAllTimers() {
 
         if (invalidTimeFound) return;
         else {
+            initial = maxTime;
             startTimer(maxTime, document.getElementById("timer"));
             var itemTimers = document.getElementsByClassName("timeRemaining");
             for (var i = 0; i < itemTimers.length; ++i) {
                 startTimer(getSeconds(timeInputs[i].value), itemTimers[i]);
             }
         }
-
     }
 }
 
