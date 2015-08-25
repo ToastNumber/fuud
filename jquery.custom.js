@@ -9,7 +9,6 @@ function updateProgressBar(timeRemainingDisplay) {
 
     var progressBar = section.find(".progressBar");
     progressBar.attr("class", "progressBar progressBarRunning");
-    progressBar.css("background-color", "LightBlue");
     progressBar.css("width", percentageWidth + "%");
 }
 

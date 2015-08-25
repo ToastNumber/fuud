@@ -55,12 +55,12 @@ function createItemSection() {
     btnRemove.setAttribute("class", "remove");
     btnRemove.innerHTML = "Remove";
     btnRemove.style.display = "inline-block";
-    btnRemove.style.display = "inline-block";
 
     var progressBar = document.createElement("div");
     progressBar.setAttribute("class", "progressBar");
     progressBar.style.display = "block";
     progressBar.style.height = "30px";
+    progressBar.style.backgroundColor = getNextColor();
 
     itemSection.appendChild(nameDiv);
     itemSection.appendChild(timeRemainingDiv);
@@ -70,11 +70,13 @@ function createItemSection() {
     return itemSection;
 }
 
-var colors = [Blue, Red, Green, Yellow];
+var colors = ["Blue", "Red", "Green", "Yellow"];
 var cIndex = 0;
 function getNextColor() {
     var result = colors[cIndex];
-    cIndex = (cIndex + 1) % cIndex.length;
+    console.log(result);
+    cIndex = (cIndex + 1) % colors.length;
+    console.log(cIndex);
     return result;
 }
 
