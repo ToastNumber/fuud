@@ -32,12 +32,13 @@ function createItemSection() {
     timeRemainingInput.setAttribute("type", "text");
     timeRemainingInput.setAttribute("class", "timeEditor");
     timeRemainingInput.setAttribute("placeholder", "Time (hh:mm:ss)");
-    var btnSubmit = document.createElement("button");
-    btnSubmit.setAttribute("class", "btnSubmit");
-    btnSubmit.innerHTML = "Submit";
+    //This should only be visible when timers are running
+    var btnUpdate = document.createElement("button");
+    btnUpdate.setAttribute("class", "btnUpdate");
+    btnUpdate.innerHTML = "Update";
     timeRemainingDiv.appendChild(timeRemainingDisplay);
     timeRemainingDiv.appendChild(timeRemainingInput);
-    timeRemainingDiv.appendChild(btnSubmit);
+    timeRemainingDiv.appendChild(btnUpdate);
 
     var btnRemove = document.createElement("button");
     btnRemove.setAttribute("class", "remove");
