@@ -5,6 +5,7 @@
 function initialise() {
     addItemSection();
     document.getElementById("btnAdd").setAttribute("onclick", "addItemSection()");
+    document.getElementById("btnStart").setAttribute("onclick", "startAllTimers()");
 }
 
 function addItemSection() {
@@ -52,7 +53,5 @@ function createItemSection() {
 
     return itemSection;
 }
-
-
 
 
