@@ -4,6 +4,7 @@
 
 function initialise() {
     addItemSection();
+    document.getElementById("btnAdd").setAttribute("onclick", "addItemSection()");
 }
 
 function addItemSection() {
@@ -38,6 +39,7 @@ function createItemSection() {
 
     var btnRemove = document.createElement("button");
     btnRemove.setAttribute("class", "remove");
+    btnRemove.innerHTML = "Remove";
 
     var progressBar = document.createElement("div");
     progressBar.setAttribute("class", "progressBar");
