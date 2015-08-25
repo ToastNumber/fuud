@@ -16,6 +16,8 @@ function startTimer(duration, display) {
         seconds = seconds < 10 ? "0" + seconds : seconds;
         display.textContent = minutes + ':' + seconds;
 
+        updateProgressBar(display);
+
         if (display === document.getElementById("timer") && minutes == 0 && seconds == 0) {
             timersRunning = false;
         }

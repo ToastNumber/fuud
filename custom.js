@@ -6,6 +6,8 @@ function initialise() {
     addItemSection();
     document.getElementById("btnAdd").setAttribute("onclick", "addItemSection()");
     document.getElementById("btnStart").setAttribute("onclick", "startAllTimers()");
+    document.getElementById("btnReset").setAttribute("onclick", "reset()");
+    document.getElementById("Pause").setAttribute("onclick", "pauseAllTimers()");
 }
 
 function addItemSection() {
@@ -54,5 +56,20 @@ function createItemSection() {
 
     return itemSection;
 }
+
+//The display is the timeRemainingDisplay
+function updateProgressBar(display) {
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
