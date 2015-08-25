@@ -28,8 +28,9 @@ function createItemSection() {
     timeRemainingDisplay.setAttribute("class", "timeRemaining");
     timeRemainingDisplay.innerHTML = "--:--";
     var timeRemainingInput = document.createElement("input");
-    timeRemainingInput.setAttribute("type", "time");
+    timeRemainingInput.setAttribute("type", "text");
     timeRemainingInput.setAttribute("class", "timeEditor");
+    timeRemainingInput.setAttribute("placeholder", "Time (hh:mm:ss)");
     var btnSubmit = document.createElement("button");
     btnSubmit.setAttribute("class", "btnSubmit");
     btnSubmit.innerHTML = "Submit";
