@@ -2,15 +2,26 @@
  * Created by Kelsey McKenna on 25/08/2015.
  */
 
-var initial; //used so that progress bars are at 50% width at appropriate time etc.
+var timers = [];
+var mainTimer;
 
+var initial; //used so that progress bars are at 50% width at appropriate time etc.
 function getInitialTime() {
     return initial;
 }
 
-function startTimer(duration, display) {
-    var timer = new CountDownTimer(duration),
-        timeObj = CountDownTimer.parse(duration);
+function startTimer(duration, display, indexOfDisplay) {
+    var timer;
+
+    if (display == document.getElementById("timer")) {
+        mainTimer = new CountDownTimer(duration);
+        timer = mainTimer;
+    } else {
+        timers[indexOfDisplay] = new CountDownTimer(duration);
+        timer = timers[indexOfDisplay];
+    }
+
+    var timeObj = CountDownTimer.parse(duration);
 
     update(timeObj.minutes, timeObj.seconds);
 
@@ -26,42 +37,74 @@ function startTimer(duration, display) {
                 timersRunning = false;
             }
         } else {
+            startRelevantTimers();
             updateProgressBar(display);
         }
     }
 
-    timer.start();
-    timersRunning = true;
+    startRelevantTimers();
+    if (display == document.getElementById("timer")) {
+        timer.start();
+    }
+}
+
+function startRelevantTimers() {
+    var timeDisplays = document.getElementsByClassName("timeRemaining");
+    var mainTimerSeconds = getSeconds(document.getElementById("timer").innerHTML);
+    for (var i = 0; i < timers.length; ++i) {
+        var s = getSeconds(timeDisplays[i].innerHTML);
+        if (s >= mainTimerSeconds && s > 0) {
+            timers[i].start();
+        }
+    }
 }
 
 var timersRunning = false;
 function startAllTimers() {
-    if (timersRunning) return;
-    else {
-        var timeInputs = document.getElementsByClassName("timeEditor");
+    var timeElements;
+    var times = [];
 
-        var maxTime = 0;
+    if (timersRunning) return;
+    else if (mainTimer === undefined || mainTimer.isStopped()) {
+        timeElements = document.getElementsByClassName("timeEditor");
         var invalidTimeFound = false;
-        for (var i = 0; i < timeInputs.length; ++i) {
-            if (!isValid(timeInputs[i].value)) {
-                timeInputs[i].setAttribute("class", "timeEditor invalidInput");
+
+        //Check for invalid elements
+        for (var i = 0; i < timeElements.length; ++i) {
+            if (!isValid(timeElements[i].value)) {
+                timeElements[i].setAttribute("class", "timeEditor invalidInput");
                 invalidTimeFound = true;
             } else {
-                timeInputs[i].setAttribute("class", "timeEditor");
-                maxTime = Math.max(maxTime, getSeconds(timeInputs[i].value));
+                timeElements[i].setAttribute("class", "timeEditor");
+                times.push(timeElements[i].value);
             }
         }
 
         if (invalidTimeFound) return;
-        else {
-            initial = maxTime;
-            startTimer(maxTime, document.getElementById("timer"));
-            var itemTimers = document.getElementsByClassName("timeRemaining");
-            for (var i = 0; i < itemTimers.length; ++i) {
-                startTimer(getSeconds(timeInputs[i].value), itemTimers[i]);
-            }
+    } else {
+        timeElements = document.getElementsByClassName("timeRemaining");
+        for (var i = 0; i < timeElements.length; ++i) {
+            times.push(timeElements[i].innerHTML);
         }
     }
+
+    var maxTime = 0;
+
+    for (var i = 0; i < timeElements.length; ++i) {
+        maxTime = Math.max(maxTime, getSeconds(times[i]));
+    }
+
+    if (mainTimer === undefined || mainTimer.isStopped()) {
+        initial = maxTime;
+    }
+
+    startTimer(maxTime, document.getElementById("timer"));
+    var itemTimers = document.getElementsByClassName("timeRemaining");
+    for (var i = 0; i < itemTimers.length; ++i) {
+        startTimer(getSeconds(times[i]), itemTimers[i], i);
+    }
+
+    timersRunning = true;
 }
 
 function isValid(timeString) {
@@ -86,4 +129,18 @@ function getSeconds(msFormat) {
 
 function toSeconds(minutes, seconds) {
     return 60 * minutes + seconds;
+}
+
+//if paused, truestop === false; if stopped, truestop === true
+function stopAllTimers(truestop) {
+    if (mainTimer !== undefined) {
+        if (truestop) mainTimer.stop();
+        else mainTimer.pause();
+    }
+
+    timersRunning = false;
+    for (var i = 0; i < timers.length; ++i) {
+        if (truestop) timers[i].stop();
+        else timers[i].pause();
+    }
 }

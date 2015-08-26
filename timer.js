@@ -3,10 +3,31 @@
  */
 
 function CountDownTimer(duration, granularity) {
-    this.duration = duration;
+    this.duration = duration || 0;
     this.granularity = granularity || 1000;
     this.tickFtns = [];
     this.running = false;
+    this.stopped = false;
+    this.paused = false;
+}
+
+CountDownTimer.prototype.stop = function() {
+    this.stopped = true;
+    this.running = false;
+    this.paused = false;
+}
+CountDownTimer.prototype.isStopped = function() {
+    return this.stopped && !this.paused;
+}
+
+CountDownTimer.prototype.pause = function() {
+    if (this.stopped || !this.running) return;
+
+    this.paused = true;
+}
+
+CountDownTimer.prototype.isPaused = function() {
+    return this.paused;
 }
 
 CountDownTimer.prototype.start = function() {
@@ -16,9 +37,12 @@ CountDownTimer.prototype.start = function() {
     this.running = true;
     var start = Date.now(),
         that = this,
-        diff, obj;
+        diff,
+        obj;
 
     (function timer() {
+        if (that.stopped || that.paused) return;
+
         diff = that.duration - (((Date.now() - start) / 1000) | 0);
 
         if (diff > 0) {

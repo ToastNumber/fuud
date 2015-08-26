@@ -6,13 +6,14 @@ function initialise() {
     addItemSection();
     document.getElementById("btnAdd").setAttribute("onclick", "addItemSection()");
     document.getElementById("btnStart").setAttribute("onclick", "startAllTimers()");
-    document.getElementById("btnReset").setAttribute("onclick", "reset()");
-    document.getElementById("btnPause").setAttribute("onclick", "pauseAllTimers()");
+    document.getElementById("btnStop").setAttribute("onclick", "stopAllTimers(true)");
+    document.getElementById("btnPause").setAttribute("onclick", "stopAllTimers(false)");
 }
 
 function addItemSection() {
     var newItemSection = createItemSection();
     document.getElementById("main").appendChild(newItemSection);
+    makeSectionsSortable();
 }
 
 function createItemSection() {
@@ -39,15 +40,17 @@ function createItemSection() {
     timeRemainingInput.setAttribute("class", "timeEditor");
     timeRemainingInput.setAttribute("placeholder", "Time (hh:mm:ss)");
     timeRemainingInput.style.display = "inline-block";
+
     //This should only be visible when timers are running
-    var btnUpdate = document.createElement("button");
-    btnUpdate.setAttribute("class", "btnUpdate");
-    btnUpdate.innerHTML = "Update";
-    btnUpdate.style.display = "inline-block";
+    var btnCopyTimerValue = document.createElement("button");
+    btnCopyTimerValue.setAttribute("class", "copy");
+    btnCopyTimerValue.innerHTML = "Copy timer value";
+    btnCopyTimerValue.style.display = "inline-block";
+    btnCopyTimerValue.setAttribute("onclick", "copyBtnPressed(this)");
 
     timeRemainingDiv.appendChild(timeRemainingDisplay);
     timeRemainingDiv.appendChild(timeRemainingInput);
-    timeRemainingDiv.appendChild(btnUpdate);
+    timeRemainingDiv.appendChild(btnCopyTimerValue);
     timeRemainingDiv.style.display = "inline-block";
     //End time display
 
@@ -55,6 +58,7 @@ function createItemSection() {
     btnRemove.setAttribute("class", "remove");
     btnRemove.innerHTML = "Remove";
     btnRemove.style.display = "inline-block";
+    btnRemove.setAttribute("onclick", "removeSectionBtnPressed(this)")
 
     var progressBar = document.createElement("div");
     progressBar.setAttribute("class", "progressBar");
@@ -74,12 +78,9 @@ var colors = ["Blue", "Red", "Green", "Yellow"];
 var cIndex = 0;
 function getNextColor() {
     var result = colors[cIndex];
-    console.log(result);
     cIndex = (cIndex + 1) % colors.length;
-    console.log(cIndex);
     return result;
 }
-
 
 
 
