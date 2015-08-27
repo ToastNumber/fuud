@@ -8,6 +8,40 @@ function initialise() {
     document.getElementById("btnStart").setAttribute("onclick", "startAllTimers()");
     document.getElementById("btnStop").setAttribute("onclick", "stopAllTimers(true)");
     document.getElementById("btnPause").setAttribute("onclick", "stopAllTimers(false)");
+
+    //Initially hide the pause button - use css in future
+    document.getElementById("btnPause").style.display = "none";
+}
+
+function updateControlDisplay() {
+    var btnPause = document.getElementById("btnPause");
+    var btnStart = document.getElementById("btnStart");
+    var btnAdd = document.getElementById("btnAdd");
+    var systemState = getSystemState();
+
+    btnStart.style.display = "none";
+    btnPause.style.display = "none";
+    btnAdd.style.display = "none";
+
+    if (systemState === "running") {
+        btnPause.style.display = "inline-block";
+        showTimeEditors(false);
+    } else if (systemState === "paused") {
+        btnStart.style.display = "inline-block";
+        showTimeEditors(false);
+    } else if (systemState === "stopped") {
+        btnStart.style.display = "inline-block";
+        btnAdd.style.display = "inline-block";
+        showTimeEditors(true);
+    }
+}
+
+//Flag indicates whether or not they should be shown
+function showTimeEditors(flag) {
+    var timeEditors = document.getElementsByClassName("timeEditor");
+    for (var i = 0; i < timeEditors.length; ++i) {
+        timeEditors[i].style.display = (flag ? "inline-block" : "none");
+    }
 }
 
 function addItemSection() {
@@ -34,6 +68,7 @@ function createItemSection() {
     timeRemainingDisplay.setAttribute("class", "timeRemaining");
     timeRemainingDisplay.innerHTML = "--:--";
     timeRemainingDisplay.style.display = "inline-block";
+    timeRemainingDisplay.tabIndex = -1;
 
     var timeRemainingInput = document.createElement("input");
     timeRemainingInput.setAttribute("type", "text");
@@ -47,6 +82,7 @@ function createItemSection() {
     btnCopyTimerValue.innerHTML = "Copy timer value";
     btnCopyTimerValue.style.display = "inline-block";
     btnCopyTimerValue.setAttribute("onclick", "copyBtnPressed(this)");
+    btnCopyTimerValue.tabIndex = -1;
 
     timeRemainingDiv.appendChild(timeRemainingDisplay);
     timeRemainingDiv.appendChild(timeRemainingInput);
@@ -58,13 +94,15 @@ function createItemSection() {
     btnRemove.setAttribute("class", "remove");
     btnRemove.innerHTML = "Remove";
     btnRemove.style.display = "inline-block";
-    btnRemove.setAttribute("onclick", "removeSectionBtnPressed(this)")
+    btnRemove.setAttribute("onclick", "removeSectionBtnPressed(this); updateControlDisplay()");
+    btnRemove.tabIndex = -1;
 
     var progressBar = document.createElement("div");
     progressBar.setAttribute("class", "progressBar");
     progressBar.style.display = "block";
     progressBar.style.height = "30px";
     progressBar.style.backgroundColor = getNextColor();
+    progressBar.tabIndex = -1;
 
     itemSection.appendChild(nameDiv);
     itemSection.appendChild(timeRemainingDiv);
