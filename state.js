@@ -23,6 +23,8 @@ function setSystemState(state) {
     } else {
         alert("setSystemState - ERROR");
     }
+
+    updateControlDisplay();
 }
 
 function getSystemState(){
