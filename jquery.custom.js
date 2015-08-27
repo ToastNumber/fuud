@@ -9,7 +9,7 @@ function makeSectionsSortable() {
 function updateProgressBar(timeRemainingDisplay) {
     var section = $(timeRemainingDisplay).parent().parent();
     var timeShown = timeRemainingDisplay.innerHTML;
-    var percentageWidth = (100 * getSeconds(timeShown)) / getInitialTime();
+    var percentageWidth = (100 * getSeconds(timeShown)) / _initial;
 
     var progressBar = section.find(".progressBar");
     progressBar.attr("class", "progressBar progressBarRunning");
@@ -17,22 +17,22 @@ function updateProgressBar(timeRemainingDisplay) {
 }
 
 function removeSectionBtnPressed(removeButton) {
-    var syncAllTimeInputs = function() {
-        var timeInputs = document.getElementsByClassName("timeEditor");
-        var timeDisplays = document.getElementsByClassName("timeRemaining");
-        for (var i = 0; i < timeInputs.length; ++i) {
-            timeInputs[i].value = timeDisplays[i].innerHTML;
-        }
-    }
-
     $(removeButton).parent().remove();
-    stopAllTimers(false);
-    startAllTimers();
+
+    if (getSystemState() === "running") {
+        //Pause system
+        stopAllTimers(false);
+        //Start them again
+        startAllTimers();
+    }
 }
 
 function copyBtnPressed(copyButton) {
-    var time = $(copyButton).siblings(".timeRemaining");
-    console.log(time);
+    var siblings = $(copyButton).siblings();
+    var timeEditor = siblings.filter(".timeEditor");
+    var timeRemaining = siblings.filter(".timeRemaining")[0].innerHTML;
+
+    $(timeEditor).val(timeRemaining);
 }
 
 
