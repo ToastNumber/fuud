@@ -9,8 +9,7 @@ function initialise() {
     document.getElementById("btnStop").setAttribute("onclick", "stopAllTimers(true)");
     document.getElementById("btnPause").setAttribute("onclick", "stopAllTimers(false)");
 
-    //Initially hide the pause button - use css in future
-    document.getElementById("btnPause").style.display = "none";
+    updateControlDisplay();
 }
 
 function updateControlDisplay() {
@@ -27,6 +26,7 @@ function updateControlDisplay() {
     if (systemState === "running") {
         btnPause.style.display = "inline-block";
         toggleButtons(false);
+        makeSectionsSortable(false);
     } else if (systemState === "paused") {
         btnStart.style.display = "inline-block";
         toggleButtons(false);
@@ -34,6 +34,7 @@ function updateControlDisplay() {
         btnStart.style.display = "inline-block";
         btnAdd.style.display = "inline-block";
         toggleButtons(true);
+        makeSectionsSortable(true);
     }
 }
 
@@ -53,7 +54,7 @@ function toggleButtons(flag) {
 function addItemSection() {
     var newItemSection = createItemSection();
     document.getElementById("main").appendChild(newItemSection);
-    makeSectionsSortable();
+    makeSectionsSortable(true);
 }
 
 function createItemSection() {
