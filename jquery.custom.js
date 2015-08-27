@@ -3,7 +3,7 @@
  */
 
 function makeSectionsSortable() {
-    $("#main").sortable();
+    //$("#main").sortable();
 }
 
 function updateProgressBar(timeRemainingDisplay) {
@@ -18,13 +18,7 @@ function updateProgressBar(timeRemainingDisplay) {
 
 function removeSectionBtnPressed(removeButton) {
     $(removeButton).parent().remove();
-
-    if (getSystemState() === "running") {
-        //Pause system
-        stopAllTimers(false);
-        //Start them again
-        startAllTimers();
-    }
+    clearTimers();
 }
 
 function copyBtnPressed(copyButton) {
