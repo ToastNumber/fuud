@@ -13,9 +13,7 @@ CountDownTimer.prototype.start = function() {
     if (this.running) {
         return;
     } else {
-        this.stopped = false;
-        this.paused = false;
-
+        this.running = true
     }
 
     var start = Date.now(),
@@ -24,7 +22,8 @@ CountDownTimer.prototype.start = function() {
         obj;
 
     (function timer() {
-        if (getSystemState !== "running") return;
+        var state = getSystemState();
+        if (state === "stopped" || state === "paused") return;
 
         diff = that.duration - (((Date.now() - start) / 1000) | 0);
 
