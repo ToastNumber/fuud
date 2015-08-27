@@ -3,7 +3,7 @@
  */
 
 function CountDownTimer(duration, granularity) {
-    this.duration = duration || 0;
+    this.duration = duration;
     this.granularity = granularity || 1000;
     this.tickFtns = [];
     this.running = false;
