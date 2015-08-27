@@ -3,7 +3,7 @@
  */
 
 function makeSectionsSortable() {
-    //$("#main").sortable();
+    $("#main").sortable();
 }
 
 function updateProgressBar(timeRemainingDisplay) {
