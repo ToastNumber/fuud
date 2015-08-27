@@ -118,19 +118,10 @@ function createItemSection() {
     return itemSection;
 }
 
-var colors = ["Blue", "Red", "Green", "Yellow"];
+var colors = ["Blue", "Red", "Green", "Yellow", "Purple"];
 var cIndex = 0;
 function getNextColor() {
     var result = colors[cIndex];
     cIndex = (cIndex + 1) % colors.length;
     return result;
 }
-
-
-
-
-
-
-
-
-
