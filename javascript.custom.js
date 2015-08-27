@@ -17,6 +17,7 @@ function updateControlDisplay() {
     var btnPause = document.getElementById("btnPause");
     var btnStart = document.getElementById("btnStart");
     var btnAdd = document.getElementById("btnAdd");
+    var removeButtons = document.getElementsByClassName("remove");
     var systemState = getSystemState();
 
     btnStart.style.display = "none";
@@ -25,22 +26,27 @@ function updateControlDisplay() {
 
     if (systemState === "running") {
         btnPause.style.display = "inline-block";
-        showTimeEditors(false);
+        toggleButtons(false);
     } else if (systemState === "paused") {
         btnStart.style.display = "inline-block";
-        showTimeEditors(false);
+        toggleButtons(false);
     } else if (systemState === "stopped") {
         btnStart.style.display = "inline-block";
         btnAdd.style.display = "inline-block";
-        showTimeEditors(true);
+        toggleButtons(true);
     }
 }
 
 //Flag indicates whether or not they should be shown
-function showTimeEditors(flag) {
+function toggleButtons(flag) {
     var timeEditors = document.getElementsByClassName("timeEditor");
+    var removeButtons = document.getElementsByClassName("remove");
+    var copyButtons = document.getElementsByClassName("copy");
     for (var i = 0; i < timeEditors.length; ++i) {
-        timeEditors[i].style.display = (flag ? "inline-block" : "none");
+        var style = (flag ? "inline-block" : "none");
+        timeEditors[i].style.display = style;
+        removeButtons[i].style.display = style;
+        copyButtons[i].style.display = style;
     }
 }
 
