@@ -2,8 +2,13 @@
  * Created by Kelsey McKenna on 25/08/2015.
  */
 
-function makeSectionsSortable() {
-    $("#main").sortable();
+function makeSectionsSortable(flag) {
+    if (flag) {
+        $("#main").sortable(); //to initialise being sortable
+        $("#main").sortable("enable"); //to enable after being disabled
+    } else {
+        $("#main").sortable("disable");
+    }
 }
 
 function updateProgressBar(timeRemainingDisplay) {
@@ -27,7 +32,5 @@ function copyBtnPressed(copyButton) {
 
     $(timeEditor).val(timeRemaining);
 }
-
-
 
 

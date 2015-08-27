@@ -2,145 +2,120 @@
  * Created by Kelsey McKenna on 25/08/2015.
  */
 
-var timers = [];
-var mainTimer;
+var _timers = [];
+var _initial; //used so that progress bars are at 50% width at appropriate time etc.
 
-var initial; //used so that progress bars are at 50% width at appropriate time etc.
-function getInitialTime() {
-    return initial;
-}
+function startTimer(duration, display) {
+    var mainTimerDisplay = document.getElementById("timer");
+    var timerToUse = new CountDownTimer(duration);
 
-function startTimer(duration, display, indexOfDisplay) {
-    var timer;
-
-    if (display == document.getElementById("timer")) {
-        mainTimer = new CountDownTimer(duration);
-        timer = mainTimer;
-    } else {
-        timers[indexOfDisplay] = new CountDownTimer(duration);
-        timer = timers[indexOfDisplay];
+    if (display !== mainTimerDisplay) {
+        _timers.push(timerToUse);
     }
 
     var timeObj = CountDownTimer.parse(duration);
 
-    update(timeObj.minutes, timeObj.seconds);
+    tick(timeObj.minutes, timeObj.seconds);
+    timerToUse.onTick(tick);
 
-    timer.onTick(update);
-
-    function update(minutes, seconds) {
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        display.textContent = minutes + ':' + seconds;
-
-        if (display === document.getElementById("timer")) {
-            if (minutes == 0 && seconds == 0) {
-                timersRunning = false;
-            }
-        } else {
-            startRelevantTimers();
-            updateProgressBar(display);
-        }
+    function tick(minutes, seconds) {
+        format(minutes, seconds, display);
+        updateSubTimers();
+        if (display !== mainTimerDisplay) stopIfEnded();
     }
 
-    startRelevantTimers();
-    if (display == document.getElementById("timer")) {
-        timer.start();
-    }
+    if (display === mainTimerDisplay) timerToUse.start();
 }
 
-function startRelevantTimers() {
-    var timeDisplays = document.getElementsByClassName("timeRemaining");
+function format(minutes, seconds, display) {
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    display.textContent = minutes + ':' + seconds;
+}
+function stopIfEnded() {
+    if (getSeconds(document.getElementById("timer").innerHTML) === 0
+        && !anyTimersRunning()) {
+        stopAllTimers(true);
+    }
+}
+function anyTimersRunning() {
+    for (var i = 0; i < _timers.length; ++i) {
+        if (_timers[i].running) return true;
+    }
+    return false;
+}
+function updateSubTimers() {
     var mainTimerSeconds = getSeconds(document.getElementById("timer").innerHTML);
-    for (var i = 0; i < timers.length; ++i) {
+    var timeDisplays = document.getElementsByClassName("timeRemaining");
+
+    for (var i = 0; i < _timers.length; ++i) {
         var s = getSeconds(timeDisplays[i].innerHTML);
         if (s >= mainTimerSeconds && s > 0) {
-            timers[i].start();
+            _timers[i].start();
         }
+
+        updateProgressBar(timeDisplays[i]);
     }
 }
 
-var timersRunning = false;
 function startAllTimers() {
-    var timeElements;
-    var times = [];
+    var numSections = document.getElementsByClassName("itemSection").length;
+    if (numSections === 0) return;
 
-    if (timersRunning) return;
-    else if (mainTimer === undefined || mainTimer.isStopped()) {
-        timeElements = document.getElementsByClassName("timeEditor");
-        var invalidTimeFound = false;
+    clearTimers();
 
-        //Check for invalid elements
-        for (var i = 0; i < timeElements.length; ++i) {
-            if (!isValid(timeElements[i].value)) {
-                timeElements[i].setAttribute("class", "timeEditor invalidInput");
-                invalidTimeFound = true;
-            } else {
-                timeElements[i].setAttribute("class", "timeEditor");
-                times.push(timeElements[i].value);
-            }
+    //Return if the timers are already running
+    if (_systemRunning) return;
+
+    if (invalidTimeEntered()) {
+        labelValidTimes();
+    } else {
+        //The durations to be given to the timers for each section
+        var times = [];
+        var timeDisplays = document.getElementsByClassName("timeRemaining");
+        var timeEditors = document.getElementsByClassName("timeEditor");
+        var mainTimerDisplay = document.getElementById("timer");
+
+        //Push all times
+        for (var i = 0; i < timeDisplays.length; ++i) {
+            var time;
+            if (getSystemState() === "paused") time = timeDisplays[i].innerHTML;
+            else time = timeEditors[i].value;
+
+            times.push(time);
         }
 
-        if (invalidTimeFound) return;
-    } else {
-        timeElements = document.getElementsByClassName("timeRemaining");
-        for (var i = 0; i < timeElements.length; ++i) {
-            times.push(timeElements[i].innerHTML);
+        var maxTime = getMaxTimeShown();
+
+        //If the system is not paused, then restart the system with a new initial value
+        if (!_systemPaused) {
+            _initial = maxTime;
+        }
+
+        setSystemState("running");
+
+        //TODO check this
+        startTimer(maxTime, mainTimerDisplay);
+
+        //Start other timers
+        for (var i = 0; i < timeDisplays.length; ++i) {
+            startTimer(getSeconds(times[i]), timeDisplays[i]);
         }
     }
-
-    var maxTime = 0;
-
-    for (var i = 0; i < timeElements.length; ++i) {
-        maxTime = Math.max(maxTime, getSeconds(times[i]));
-    }
-
-    if (mainTimer === undefined || mainTimer.isStopped()) {
-        initial = maxTime;
-    }
-
-    startTimer(maxTime, document.getElementById("timer"));
-    var itemTimers = document.getElementsByClassName("timeRemaining");
-    for (var i = 0; i < itemTimers.length; ++i) {
-        startTimer(getSeconds(times[i]), itemTimers[i], i);
-    }
-
-    timersRunning = true;
-}
-
-function isValid(timeString) {
-    var msRegex = /([0-5]?[0-9])(:[0-5][0-9]?)?/;
-    return matchExact(msRegex, timeString);
-}
-
-function matchExact(r, str) {
-    var match = str.match(r);
-    return match != null && str == match[0];
-}
-
-function getSeconds(msFormat) {
-    var parts = msFormat.split(":");
-
-    if (parts.length == 1) {
-        return toSeconds(0, parseInt(parts[0]), 0);
-    } else {
-        return toSeconds(parseInt(parts[0]), parseInt(parts[1]));
-    }
-}
-
-function toSeconds(minutes, seconds) {
-    return 60 * minutes + seconds;
 }
 
 //if paused, truestop === false; if stopped, truestop === true
 function stopAllTimers(truestop) {
-    if (mainTimer !== undefined) {
-        if (truestop) mainTimer.stop();
-        else mainTimer.pause();
-    }
+    clearTimers();
 
-    timersRunning = false;
-    for (var i = 0; i < timers.length; ++i) {
-        if (truestop) timers[i].stop();
-        else timers[i].pause();
-    }
+    if (truestop) setSystemState("stopped");
+    else setSystemState("paused");
 }
+
+function clearTimers() {
+    for (var i = 0; i < _timers.length; ++i) {
+        _timers[i] = undefined;
+    }
+    _timers = [];
+}
+
