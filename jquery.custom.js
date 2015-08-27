@@ -18,7 +18,6 @@ function updateProgressBar(timeRemainingDisplay) {
 
 function removeSectionBtnPressed(removeButton) {
     $(removeButton).parent().remove();
-    clearTimers();
 }
 
 function copyBtnPressed(copyButton) {
