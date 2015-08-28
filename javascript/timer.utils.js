@@ -4,7 +4,7 @@
 
 function isValid(timeString) {
     var msRegex = /([0-5]?[0-9])(:[0-5][0-9]?)?/;
-    return matchExact(msRegex, timeString);
+    return matchExact(msRegex, timeString) && getSeconds(timeString) !== 0;
 }
 
 function matchExact(r, str) {
