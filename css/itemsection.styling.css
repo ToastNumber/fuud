@@ -1,0 +1,41 @@
+.itemSection * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.itemSection {
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 3px solid black;
+}
+
+.invalidTime {
+    border-color: red;
+}
+
+.progressBar {
+    display: block;
+    margin-top: 10px;
+    width: 0px;
+    height: 30px;
+}
+
+.timeRemaining {
+    font-family: lucica sans, sans-serif;
+    font-size: 60px;
+}
+
+.itemSection input {
+    font-size: 30px;
+    text-align: center;
+}
+
+.itemSection button {
+    margin-right: 5px;
+    margin-left: 10px;
+}
+
+.nameDisplay {
+    border: none
+}
