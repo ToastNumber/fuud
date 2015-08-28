@@ -53,7 +53,10 @@ function labelValidTimes() {
 
     for (var i = 0; i < timeEditors.length; ++i) {
         if (isValid(timeEditors[i].value)) timeEditors[i].setAttribute("class", "timeEditor");
-        else timeEditors[i].setAttribute("class", "timeEditor invalidTime");
+        else {
+            timeEditors[i].setAttribute("class", "timeEditor invalidTime");
+            $(timeEditors[i]).effect( "bounce", {times:3}, 300 );
+        }
     }
 }
 

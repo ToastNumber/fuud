@@ -41,7 +41,7 @@ body {
     top: 290px;
     bottom: 80px;
     left: 80px;
-    right: 20%;
+    right: 80px;
     padding: 40px;
     overflow-y: auto;
     color: black;
@@ -157,6 +157,11 @@ body {
     left: 300px;
 }
 
-
+#cutleryImage {
+    position: absolute;
+    cursor: pointer;
+    top: 215px;
+    left: 365px;
+}
 
 

@@ -15,14 +15,21 @@ function updateControlDisplay() {
     var btnPause = document.getElementById("btnPause");
     var btnStart = document.getElementById("btnStart");
     var btnAdd = document.getElementById("btnAdd");
+    var btnClear = document.getElementById("btnClear");
+    var btnFood = document.getElementById("cutleryImage");
     var systemState = getSystemState();
 
     btnStart.style.display = "none";
     btnPause.style.display = "none";
     btnAdd.style.display = "none";
+    btnClear.style.display = "none";
+    btnFood.style.display = "none";
 
     if (systemState === "running") {
         btnPause.style.display = "inline-block";
+
+        if (_foodShown) toggleFoodSection();
+
         toggleButtons(false);
         makeSectionsSortable(false);
     } else if (systemState === "paused") {
@@ -31,6 +38,9 @@ function updateControlDisplay() {
     } else if (systemState === "stopped") {
         btnStart.style.display = "inline-block";
         btnAdd.style.display = "inline-block";
+        btnClear.style.display = "inline-block";
+        btnFood.style.display = "inline-block";
+
         toggleButtons(true);
         makeSectionsSortable(true);
     }
@@ -138,20 +148,22 @@ function toggleSound() {
 }
 
 function presetSelection(imageSelected) {
-    var newItemSection = createItemSection();
+    if (getSystemState() === "stopped") {
+        var newItemSection = createItemSection();
 
-    var set = function (name, time) {
-        newItemSection.getElementsByClassName("name")[0].value = name;
-        newItemSection.getElementsByClassName("timeEditor")[0].value = time;
+        var set = function (name, time) {
+            newItemSection.getElementsByClassName("name")[0].value = name;
+            newItemSection.getElementsByClassName("timeEditor")[0].value = time;
+        }
+
+        if (imageSelected.id === "sausage") set("Sausages", "35:00");
+        else if (imageSelected.id === "chip") set("Chips", "25:00");
+        else if (imageSelected.id === "bean") set("Beans", "3:00");
+        else if (imageSelected.id === "waffle") set("Waffles", "20:00");
+
+        document.getElementById("main").appendChild(newItemSection);
+        makeSectionsSortable(true);
     }
-
-    if (imageSelected.id === "sausage") set("Sausages", "35:00");
-    else if (imageSelected.id === "chip") set("Chips", "25:00");
-    else if (imageSelected.id === "bean") set("Beans", "3:00");
-    else if (imageSelected.id ==="waffle") set("Waffles", "20:00");
-
-    document.getElementById("main").appendChild(newItemSection);
-    makeSectionsSortable(true);
 }
 
 function clearSections() {
