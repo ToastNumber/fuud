@@ -3,7 +3,6 @@
  */
 
 function initialise() {
-    addItemSection();
     document.getElementById("btnAdd").setAttribute("onclick", "addItemSection()");
     document.getElementById("btnStart").setAttribute("onclick", "startAllTimers()");
     document.getElementById("btnStop").setAttribute("onclick", "stopAllTimers(true)");
@@ -137,5 +136,33 @@ function toggleSound() {
 
     _soundOn = !_soundOn;
 }
+
+function presetSelection(imageSelected) {
+    var newItemSection = createItemSection();
+
+    var set = function (name, time) {
+        newItemSection.getElementsByClassName("name")[0].value = name;
+        newItemSection.getElementsByClassName("timeEditor")[0].value = time;
+    }
+
+    if (imageSelected.id === "sausage") set("Sausages", "35:00");
+    else if (imageSelected.id === "chip") set("Chips", "25:00");
+    else if (imageSelected.id === "bean") set("Beans", "3:00");
+    else if (imageSelected.id ==="waffle") set("Waffles", "20:00");
+
+    document.getElementById("main").appendChild(newItemSection);
+    makeSectionsSortable(true);
+}
+
+function clearSections() {
+    var sections = document.getElementsByClassName("itemSection");
+    for (var i = sections.length - 1; i >= 0; --i) {
+        sections[i].remove();
+    }
+}
+
+
+
+
 
 

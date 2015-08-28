@@ -47,6 +47,35 @@ body {
     color: black;
 }
 
+#presetSelection {
+    border-radius: 25px;
+    background-color: white;
+    position: absolute;
+    top: 290px;
+    bottom: 80px;
+    left: 82%;
+    right: 80px;
+    padding: 20px;
+    overflow: hidden;
+    color: black;
+    text-align: center;
+}
+
+#presetSelection div {
+    text-align: center;
+    overflow-y: scroll;
+    padding-right: 50px; /*Push away the scroll bar*/
+    padding-left: 10px; /*Center everything since scroll bar is moved */
+    height: 100%;
+    width: 100%;
+}
+
+#presetSelection img {
+    width: 100%;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
 #timer {
     font-family: "lucida console", sans-serif;
     font-size: 70px;
@@ -58,7 +87,13 @@ body {
     left: 80px;
 }
 
-.control, #btnAdd {
+#btnClear {
+    position: absolute;
+    top: 150px;
+    left: 80px;
+}
+
+.control, #btnAdd, #btnClear {
     background-color: #44c767;
     -moz-border-radius: 28px;
     -webkit-border-radius: 28px;
@@ -76,11 +111,11 @@ body {
     width: 180px;
 }
 
-.control:hover, #btnAdd:hover {
+.control:hover, #btnAdd:hover, #btnClear:hover {
     background-color: #5cbf2a;
 }
 
-.control:active, #btnAdd:active {
+.control:active, #btnAdd:active, #btnClear:active {
     border: 2px ridge;
 }
 
