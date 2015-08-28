@@ -33,8 +33,19 @@
 </div>
 
 <div id="option">
-    <button id="btnAdd">Add Item</button>
+    <button id="btnAdd">Add</button>
     <img src="images/volume_on.png" width="70" id="soundImage" onclick="toggleSound()"/>
+    <button id="btnClear" onclick="clearSections()">Clear</button>
+    <img src="images/cutlery.png" width="70" id="cutleryImage" onclick="toggleFoodSection()"/>
+</div>
+
+<div id="presetSelection">
+    <div>
+        <img src="images/sausage.jpg" id="sausage" alt="sausages.jpg" onclick='presetSelection(this)'/>
+        <img src="images/chip.png" id="chip" alt="chip.png" onclick='presetSelection(this)'/>
+        <img src="images/bean.jpg" id="bean" alt="bean.jpg" onclick='presetSelection(this)'/>
+        <img src="images/waffle.jpg" id="waffle" alt="waffle.jpg" onclick='presetSelection(this)'/>
+    </div>
 </div>
 
 <div id="main">

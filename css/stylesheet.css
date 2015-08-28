@@ -41,10 +41,39 @@ body {
     top: 290px;
     bottom: 80px;
     left: 80px;
-    right: 20%;
+    right: 80px;
     padding: 40px;
     overflow-y: auto;
     color: black;
+}
+
+#presetSelection {
+    border-radius: 25px;
+    background-color: white;
+    position: absolute;
+    top: 290px;
+    bottom: 80px;
+    left: 82%;
+    right: 80px;
+    padding: 20px;
+    overflow: hidden;
+    color: black;
+    text-align: center;
+}
+
+#presetSelection div {
+    text-align: center;
+    overflow-y: scroll;
+    padding-right: 50px; /*Push away the scroll bar*/
+    padding-left: 10px; /*Center everything since scroll bar is moved */
+    height: 100%;
+    width: 100%;
+}
+
+#presetSelection img {
+    width: 100%;
+    margin-bottom: 20px;
+    cursor: pointer;
 }
 
 #timer {
@@ -52,13 +81,8 @@ body {
     font-size: 70px;
 }
 
-#btnAdd {
-    position: absolute;
-    top: 220px;
-    left: 80px;
-}
 
-.control, #btnAdd {
+.control, #btnAdd, #btnClear {
     background-color: #44c767;
     -moz-border-radius: 28px;
     -webkit-border-radius: 28px;
@@ -68,21 +92,38 @@ body {
     cursor: pointer;
     color: #ffffff;
     font-family: Arial;
-    font-size: 23px;
+    font-size: 17px;
     font-weight: bold;
     padding: 16px 31px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #2f6627;
-    width: 180px;
+    text-align: center;
+    width: 120px;
+    white-space: nowrap;
 }
 
-.control:hover, #btnAdd:hover {
+.control:hover, #btnAdd:hover, #btnClear:hover {
     background-color: #5cbf2a;
 }
 
-.control:active, #btnAdd:active {
+.control:active, #btnAdd:active, #btnClear:active {
     border: 2px ridge;
 }
+
+#btnAdd {
+    border-radius: 10px;
+    position: absolute;
+    top: 220px;
+    left: 80px;
+}
+
+#btnClear {
+    border-radius: 10px;
+    position: absolute;
+    top: 220px;
+    right: 80px;
+}
+
 
 #btnPause {
     display: none;
@@ -118,10 +159,15 @@ body {
 #soundImage {
     position: absolute;
     cursor: pointer;
-    top: 215px;
-    left: 300px;
+    bottom: 10px;
+    left: 80px;
 }
 
-
+#cutleryImage {
+    position: absolute;
+    cursor: pointer;
+    bottom: 10px;
+    right: 80px;
+}
 
 
