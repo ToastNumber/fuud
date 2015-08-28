@@ -21,9 +21,13 @@
     height: 30px;
 }
 
+.timeEditor {
+    width: 200px;
+}
+
 .timeRemaining {
     font-family: lucica sans, sans-serif;
-    font-size: 60px;
+    font-size: 40px;
 }
 
 .itemSection input {

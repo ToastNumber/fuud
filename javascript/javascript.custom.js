@@ -79,13 +79,13 @@ function createItemSection() {
     var timeRemainingInput = document.createElement("input");
     timeRemainingInput.setAttribute("type", "text");
     timeRemainingInput.setAttribute("class", "timeEditor");
-    timeRemainingInput.setAttribute("placeholder", "Time (hh:mm:ss)");
+    timeRemainingInput.setAttribute("placeholder", "Time (mm:ss)");
     addEnterKeyListener(timeRemainingInput);
 
     //This should only be visible when timers are running
     var btnCopyTimerValue = document.createElement("button");
     btnCopyTimerValue.setAttribute("class", "copy");
-    btnCopyTimerValue.innerHTML = "Copy timer value";
+    btnCopyTimerValue.innerHTML = "Copy timer";
     btnCopyTimerValue.setAttribute("onclick", "copyBtnPressed(this)");
     btnCopyTimerValue.tabIndex = -1;
 
@@ -96,7 +96,7 @@ function createItemSection() {
 
     var btnRemove = document.createElement("button");
     btnRemove.setAttribute("class", "remove");
-    btnRemove.innerHTML = "Remove item";
+    btnRemove.innerHTML = "Remove";
     btnRemove.setAttribute("onclick", "removeSectionBtnPressed(this); updateControlDisplay()");
     btnRemove.tabIndex = -1;
 
@@ -129,3 +129,13 @@ function getNextColor() {
     cIndex = (cIndex + 1) % colors.length;
     return result;
 }
+
+var _soundOn = true;
+function toggleSound() {
+    var soundImage = document.getElementById("soundImage");
+    soundImage.src = "images/" + (_soundOn ? "volume_off.png" : "volume_on.png");
+
+    _soundOn = !_soundOn;
+}
+
+

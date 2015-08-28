@@ -36,13 +36,13 @@ function stopIfEnded() {
     if (getSeconds(document.getElementById("timer").innerHTML) === 0
         && !anyTimersRunning()) {
         stopAllTimers(true);
-        playStopSound();
+        if (_soundOn) playStopSound();
     }
 }
 function playStopSound() {
     var audio = new Audio('http://www.freesound.org/data/previews/264/264594_65641-lq.mp3');
     audio.play();
-    setTimeout(function() {audio.pause()}, 4990);
+    setTimeout(function() {audio.pause()}, 2000);
 }
 function anyTimersRunning() {
     for (var i = 0; i < _timers.length; ++i) {
