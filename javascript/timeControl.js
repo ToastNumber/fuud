@@ -40,7 +40,7 @@ function stopIfEnded() {
     }
 }
 function playStopSound() {
-    var audio = new Audio('resources/01 I Know Better.mp3');
+    var audio = new Audio('http://www.freesound.org/data/previews/264/264594_65641-lq.mp3');
     audio.play();
     setTimeout(function() {audio.pause()}, 4990);
 }
