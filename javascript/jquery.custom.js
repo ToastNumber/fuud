@@ -3,7 +3,15 @@
  */
 
 $(document).ready(function() {
-    slideFoodSection();
+    //Slides the food section instantly
+
+    var selectionSection = document.getElementById("presetSelection");
+    // Set the effect type
+    var effect = 'slide';
+    // Set the options for the effect type chosen
+    var options = {direction: "right"};
+    // Set the duration (default: 400 milliseconds)
+    $(selectionSection).toggle(effect, options, 1);
 });
 
 var _foodShown = false;

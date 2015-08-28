@@ -81,17 +81,6 @@ body {
     font-size: 70px;
 }
 
-#btnAdd {
-    position: absolute;
-    top: 220px;
-    left: 80px;
-}
-
-#btnClear {
-    position: absolute;
-    top: 150px;
-    left: 80px;
-}
 
 .control, #btnAdd, #btnClear {
     background-color: #44c767;
@@ -103,12 +92,14 @@ body {
     cursor: pointer;
     color: #ffffff;
     font-family: Arial;
-    font-size: 23px;
+    font-size: 17px;
     font-weight: bold;
     padding: 16px 31px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #2f6627;
-    width: 180px;
+    text-align: center;
+    width: 120px;
+    white-space: nowrap;
 }
 
 .control:hover, #btnAdd:hover, #btnClear:hover {
@@ -118,6 +109,21 @@ body {
 .control:active, #btnAdd:active, #btnClear:active {
     border: 2px ridge;
 }
+
+#btnAdd {
+    border-radius: 10px;
+    position: absolute;
+    top: 220px;
+    left: 80px;
+}
+
+#btnClear {
+    border-radius: 10px;
+    position: absolute;
+    top: 220px;
+    right: 80px;
+}
+
 
 #btnPause {
     display: none;
@@ -153,15 +159,15 @@ body {
 #soundImage {
     position: absolute;
     cursor: pointer;
-    top: 215px;
-    left: 300px;
+    bottom: 10px;
+    left: 80px;
 }
 
 #cutleryImage {
     position: absolute;
     cursor: pointer;
-    top: 215px;
-    left: 365px;
+    bottom: 10px;
+    right: 80px;
 }
 
 
