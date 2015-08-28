@@ -65,7 +65,7 @@ function createItemSection() {
     var nameInput = document.createElement("input");
     nameInput.setAttribute("type", "text");
     nameInput.setAttribute("class", "name");
-    nameInput.setAttribute("placeholder", "Food Item");
+    nameInput.setAttribute("placeholder", "Item");
     nameDiv.style.display = "inline-block";
     nameDiv.appendChild(nameInput);
 
@@ -106,8 +106,6 @@ function createItemSection() {
 
     var progressBar = document.createElement("div");
     progressBar.setAttribute("class", "progressBar");
-    progressBar.style.display = "block";
-    progressBar.style.height = "30px";
     progressBar.style.backgroundColor = getNextColor();
     progressBar.tabIndex = -1;
 
