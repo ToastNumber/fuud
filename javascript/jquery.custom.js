@@ -17,12 +17,15 @@ function updateProgressBar(timeRemainingDisplay) {
     var percentageWidth = (100 * getSeconds(timeShown)) / _initial;
 
     var progressBar = section.find(".progressBar");
-    progressBar.attr("class", "progressBar progressBarRunning");
     progressBar.css("width", percentageWidth + "%");
 }
 
 function removeSectionBtnPressed(removeButton) {
-    $(removeButton).parent().remove();
+    var item = $(removeButton).parent();
+    var time = 200;
+    item.fadeTo(time, 0.0);
+    setTimeout(function() {item.remove()}, time);
+
 }
 
 function copyBtnPressed(copyButton) {

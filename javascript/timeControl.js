@@ -36,7 +36,13 @@ function stopIfEnded() {
     if (getSeconds(document.getElementById("timer").innerHTML) === 0
         && !anyTimersRunning()) {
         stopAllTimers(true);
+        if (_soundOn) playStopSound();
     }
+}
+function playStopSound() {
+    var audio = new Audio('http://www.freesound.org/data/previews/264/264594_65641-lq.mp3');
+    audio.play();
+    setTimeout(function() {audio.pause()}, 2000);
 }
 function anyTimersRunning() {
     for (var i = 0; i < _timers.length; ++i) {
@@ -66,10 +72,7 @@ function startAllTimers() {
 
     //Return if the timers are already running
     if (_systemRunning) return;
-
-    if (invalidTimeEntered()) {
-        labelValidTimes();
-    } else {
+    else if (!invalidTimeEntered()) {
         //The durations to be given to the timers for each section
         var times = [];
         var timeDisplays = document.getElementsByClassName("timeRemaining");
@@ -102,6 +105,8 @@ function startAllTimers() {
             startTimer(getSeconds(times[i]), timeDisplays[i]);
         }
     }
+
+    labelValidTimes();
 }
 
 //if paused, truestop === false; if stopped, truestop === true

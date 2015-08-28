@@ -11,22 +11,30 @@
     <script type="text/javascript" src="javascript/timer.utils.js"></script>
     <script type="text/javascript" src="javascript/state.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
+    <link rel="stylesheet" type="text/css" href="css/itemsection.styling.css"/>
+    <link href="http://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet" type="text/css">
+
 </head>
 <body onload="initialise()">
 
 <div id="title">
-    <h1>Fuud</h1>
+    <span>Fuud</span>
 </div>
 
 <div id="timerContainer">
     <div id="timer">00:00</div>
+    <div id="controlButtons">
+        <button id="btnStart" class="control">Start</button>
+        <button id="btnPause" class="control">Pause</button>
+        <button id="btnStop" class="control">Stop</button>
+    </div>
 </div>
 
-<div id="buttons">
-    <button id="btnStart" class="control">Start</button>
-    <button id="btnPause" class="control">Pause</button>
-    <button id="btnStop" class="control">Stop</button>
-    <button id="btnAdd">Add</button>
+<div id="option">
+    <button id="btnAdd">Add Item</button>
+    <img src="images/volume_on.png" width="70" id="soundImage" onclick="toggleSound()"/>
 </div>
 
 <div id="main">

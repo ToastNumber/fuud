@@ -16,7 +16,6 @@ function updateControlDisplay() {
     var btnPause = document.getElementById("btnPause");
     var btnStart = document.getElementById("btnStart");
     var btnAdd = document.getElementById("btnAdd");
-    var removeButtons = document.getElementsByClassName("remove");
     var systemState = getSystemState();
 
     btnStart.style.display = "none";
@@ -65,49 +64,44 @@ function createItemSection() {
     var nameInput = document.createElement("input");
     nameInput.setAttribute("type", "text");
     nameInput.setAttribute("class", "name");
-    nameInput.setAttribute("placeholder", "Food Item");
-    nameDiv.style.display = "inline-block";
+    nameInput.setAttribute("placeholder", "Name");
+    addEnterKeyListener(nameInput);
     nameDiv.appendChild(nameInput);
+
 
     //Time display
     var timeRemainingDiv = document.createElement("div");
     var timeRemainingDisplay = document.createElement("div");
     timeRemainingDisplay.setAttribute("class", "timeRemaining");
-    timeRemainingDisplay.innerHTML = "--:--";
-    timeRemainingDisplay.style.display = "inline-block";
+    timeRemainingDisplay.innerHTML = "00:00";
     timeRemainingDisplay.tabIndex = -1;
 
     var timeRemainingInput = document.createElement("input");
     timeRemainingInput.setAttribute("type", "text");
     timeRemainingInput.setAttribute("class", "timeEditor");
-    timeRemainingInput.setAttribute("placeholder", "Time (hh:mm:ss)");
-    timeRemainingInput.style.display = "inline-block";
+    timeRemainingInput.setAttribute("placeholder", "Time (mm:ss)");
+    addEnterKeyListener(timeRemainingInput);
 
     //This should only be visible when timers are running
     var btnCopyTimerValue = document.createElement("button");
     btnCopyTimerValue.setAttribute("class", "copy");
-    btnCopyTimerValue.innerHTML = "Copy timer value";
-    btnCopyTimerValue.style.display = "inline-block";
+    btnCopyTimerValue.innerHTML = "Copy timer";
     btnCopyTimerValue.setAttribute("onclick", "copyBtnPressed(this)");
     btnCopyTimerValue.tabIndex = -1;
 
     timeRemainingDiv.appendChild(timeRemainingDisplay);
     timeRemainingDiv.appendChild(timeRemainingInput);
     timeRemainingDiv.appendChild(btnCopyTimerValue);
-    timeRemainingDiv.style.display = "inline-block";
     //End time display
 
     var btnRemove = document.createElement("button");
     btnRemove.setAttribute("class", "remove");
     btnRemove.innerHTML = "Remove";
-    btnRemove.style.display = "inline-block";
     btnRemove.setAttribute("onclick", "removeSectionBtnPressed(this); updateControlDisplay()");
     btnRemove.tabIndex = -1;
 
     var progressBar = document.createElement("div");
     progressBar.setAttribute("class", "progressBar");
-    progressBar.style.display = "block";
-    progressBar.style.height = "30px";
     progressBar.style.backgroundColor = getNextColor();
     progressBar.tabIndex = -1;
 
@@ -119,6 +113,15 @@ function createItemSection() {
     return itemSection;
 }
 
+function addEnterKeyListener(element) {
+    element.addEventListener('keypress', function (e) {
+        var key = e.which || e.keyCode;
+        if (key === 13) { // 13 is enter
+            startAllTimers();
+        }
+    });
+}
+
 var colors = ["Blue", "Red", "Green", "Yellow", "Purple"];
 var cIndex = 0;
 function getNextColor() {
@@ -126,3 +129,13 @@ function getNextColor() {
     cIndex = (cIndex + 1) % colors.length;
     return result;
 }
+
+var _soundOn = true;
+function toggleSound() {
+    var soundImage = document.getElementById("soundImage");
+    soundImage.src = "images/" + (_soundOn ? "volume_off.png" : "volume_on.png");
+
+    _soundOn = !_soundOn;
+}
+
+
